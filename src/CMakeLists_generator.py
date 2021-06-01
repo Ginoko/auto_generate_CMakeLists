@@ -41,7 +41,7 @@ class LanguageConfiguration:
 
 
 class CMakeListsGenerator:
-    __cmake_minimum_version = "2.80"
+    __cmake_minimum_version = "2.8.0"
     __ignore_list = [
         ".svn",
         ".idea",
@@ -167,7 +167,11 @@ class CMakeListsGenerator:
             for name in files:
                 if self.__is_code_file(name):
                     print("[GENERATOR]read code file: " + name)
-                    file_queue.append(relative_root + '/' + name)
+                    if relative_root == "":
+                        name_with_path = name
+                    else:
+                        name_with_path = relative_root + '/' + name
+                    file_queue.append(name_with_path)
                     exist_code_file = True
                     count += 1
             if exist_code_file and relative_root != "":
